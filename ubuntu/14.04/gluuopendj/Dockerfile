@@ -51,14 +51,38 @@ RUN /opt/opendj/bin/dsconfig \
     --port 4444 \
     --bindDN "cn=directory manager" \
     --bindPasswordFile /root/.ldappw \
-    set-global-configuration-prop --set single-structural-objectclass-behavior:accept \
-    && /opt/opendj/bin/dsconfig \
-    set-attribute-syntax-prop --syntax-name "Directory String" --set allow-zero-length-values:true \
-    && /opt/opendj/bin/dsconfig \
-    set-password-policy-prop --policy-name "Default Password Policy" --set allow-pre-encoded-passwords:true \
-    && /opt/opendj/bin/dsconfig \
-    set-log-publisher-prop --publisher-name "File-Based Audit Logger" --set enabled:true \
-    && /opt/opendj/bin/dsconfig \
+    set-global-configuration-prop --set single-structural-objectclass-behavior:accept 
+RUN /opt/opendj/bin/dsconfig \
+    --trustAll \
+    --no-prompt \
+    --hostname localhost \
+    --port 4444 \
+    --bindDN "cn=directory manager" \
+    --bindPasswordFile /root/.ldappw \
+    set-attribute-syntax-prop --syntax-name "Directory String" --set allow-zero-length-values:true 
+RUN /opt/opendj/bin/dsconfig \
+    --trustAll \
+    --no-prompt \
+    --hostname localhost \
+    --port 4444 \
+    --bindDN "cn=directory manager" \
+    --bindPasswordFile /root/.ldappw \
+    set-password-policy-prop --policy-name "Default Password Policy" --set allow-pre-encoded-passwords:true 
+RUN /opt/opendj/bin/dsconfig \
+    --trustAll \
+    --no-prompt \
+    --hostname localhost \
+    --port 4444 \
+    --bindDN "cn=directory manager" \
+    --bindPasswordFile /root/.ldappw \
+    set-log-publisher-prop --publisher-name "File-Based Audit Logger" --set enabled:true 
+RUN /opt/opendj/bin/dsconfig \
+    --trustAll \
+    --no-prompt \
+    --hostname localhost \
+    --port 4444 \
+    --bindDN "cn=directory manager" \
+    --bindPasswordFile /root/.ldappw \
     create-backend --backend-name site --set base-dn:o=site --type local-db --set enabled:true
 
 #TODO index opendj
