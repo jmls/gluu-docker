@@ -47,7 +47,7 @@ RUN /opt/opendj/setup \
 RUN /opt/opendj/bin/dsconfig \
     --trustAll \
     --no-prompt \
-    --hostname localgost \
+    --hostname localhost \
     --port 4444 \
     --bindDN "cn=directory manager" \
     --bindPasswordFile /root/.ldappw \
