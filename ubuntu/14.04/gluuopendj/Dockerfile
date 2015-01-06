@@ -1,4 +1,4 @@
-FROM ubuntu:14.04
+FROM ubuntu
 
 MAINTAINER shouro@gluu.org
 
@@ -8,6 +8,7 @@ RUN apt-get update && apt-get install -y \
     openjdk-7-jre-headless \
     unzip \
     wget \
+    curl \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
@@ -51,9 +52,13 @@ RUN /opt/opendj/bin/dsconfig \
     --bindDN "cn=directory manager" \
     --bindPasswordFile /root/.ldappw \
     set-global-configuration-prop --set single-structural-objectclass-behavior:accept \
+    && /opt/opendj/bin/dsconfig \
     set-attribute-syntax-prop --syntax-name "Directory String" --set allow-zero-length-values:true \
+    && /opt/opendj/bin/dsconfig \
     set-password-policy-prop --policy-name "Default Password Policy" --set allow-pre-encoded-passwords:true \
+    && /opt/opendj/bin/dsconfig \
     set-log-publisher-prop --publisher-name "File-Based Audit Logger" --set enabled:true \
+    && /opt/opendj/bin/dsconfig \
     create-backend --backend-name site --set base-dn:o=site --type local-db --set enabled:true
 
 #TODO index opendj
@@ -64,4 +69,3 @@ RUN touch /root/.ldappw
 VOLUME ["/etc/certs"]
 
 COPY schema /opt/opendj/config/schema
-
